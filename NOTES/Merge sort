@@ -1,0 +1,19 @@
+Merge Sort
+
+Merge Sort is a "Divide and Conquer" algorithm. It is much faster than Bubble or Selection sort for large datasets. It works by splitting the list into halves, sorting each half recursively, and then merging the sorted halves back together.
+
+How it works:
+
+Divide: Split the array into two halves.
+
+Conquer: Recursively sort the two halves.
+
+Combine: Merge the two sorted halves into a single sorted array.
+
+The key to its efficiency is the merge step. Merging two sorted lists is very fast because you only need to compare the front elements of each list.
+
+Complexity:
+
+Time Complexity: O(n log n) - This is significantly faster than O(n^2). It scales well for large inputs.
+
+Space Complexity: O(n) - It requires extra space to hold the temporary arrays during the merge process.
