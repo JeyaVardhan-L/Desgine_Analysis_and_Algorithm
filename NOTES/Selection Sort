@@ -1,0 +1,21 @@
+Selection Sort
+
+Selection Sort is a simple comparison-based sorting algorithm. It is generally considered better than Bubble Sort because it performs fewer swaps.
+
+How it works:
+
+The list is divided into two parts: the sorted part at the left end and the unsorted part at the right end.
+
+Initially, the sorted part is empty and the unsorted part is the entire list.
+
+The algorithm proceeds by finding the smallest (minimum) element in the unsorted sublist.
+
+It swaps this smallest element with the leftmost unsorted element (putting it in sorted order).
+
+It then moves the sublist boundaries one element to the right.
+
+Complexity:
+
+Time Complexity: O(n^2) - It uses nested loops, so it is still slow for large lists.
+
+Space Complexity: O(1) - It sorts in place.
