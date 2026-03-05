@@ -5,7 +5,7 @@ struct Item {
     int value;
     int weight;
     float ratio; // Value per unit weight
-};
+}; 
 
 // Function to swap two items
 void swap(struct Item *a, struct Item *b) {
