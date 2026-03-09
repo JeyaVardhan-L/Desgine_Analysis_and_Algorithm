@@ -1,18 +1,16 @@
-Bubble Sort
-Bubble Sort is one of the simplest sorting algorithms. It works by repeatedly stepping through the list, comparing adjacent elements, and swapping them if they are in the wrong order. The pass through the list is repeated until the list is sorted.
+# Bubble Sort
 
-How it works:
+Bubble Sort is one of the simplest sorting algorithms. It works by repeatedly stepping through the list, comparing adjacent elements, and swapping them if they are in the wrong order. The pass through the list is repeated until the list is sorted. 
 
-Look at the first two elements. If the first is bigger than the second, swap them.
 
-Move to the next pair (the 2nd and 3rd elements) and do the same.
 
-Continue this until you reach the end of the array. At this point, the largest element will have "bubbled up" to the very last position.
+The algorithm gets its name because smaller elements "bubble" to the top of the list, while larger elements sink to the bottom.
 
-Repeat the process for the remaining elements (ignoring the last one, which is already sorted).
+### Complexity Analysis
+* **Time Complexity:** * **Best Case:** $O(n)$ - Occurs when the array is already sorted (thanks to the optimization flag we added).
+  * **Worst Case:** $O(n^2)$ - Occurs when the array is reverse sorted.
+  * **Average Case:** $O(n^2)$
+* **Space Complexity:** $O(1)$ - It sorts in-place, meaning it only requires a single extra memory space for the `temp` variable during a swap.
 
-Complexity:
-
-Time Complexity: O(n^2) - This means if you double the number of elements, the time taken increases roughly four times. It is slow for large lists.
-
-Space Complexity: O(1) - It sorts the array in place, so it uses very little extra memory.
+### When to use it?
+In professional environments, Bubble Sort is rarely used for large datasets because $O(n^2)$ time complexity is terribly inefficient compared to Quick Sort or Merge Sort. However, it is useful in computer graphics for detecting a very small error in almost-sorted arrays and fixing it with linear complexity.
