@@ -1,82 +1,89 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-// Structure to represent an Item
+// Structure to represent our loot
 struct Item {
     int value;
     int weight;
-    float ratio; // Value per unit weight
+    float ratio; // Value per unit weight. This is our greedy metric!
 }; 
 
-// Function to swap two items
-void swap(struct Item *a, struct Item *b) {
-    struct Item temp = *a;
-    *a = *b;
-    *b = temp;
+// Comparator function for qsort. We want items sorted by ratio in descending order.
+int compareItems(const void *a, const void *b) {
+    struct Item *itemA = (struct Item *)a;
+    struct Item *itemB = (struct Item *)b;
+    
+    // We want the highest ratio first
+    if (itemB->ratio > itemA->ratio) return 1;
+    else if (itemB->ratio < itemA->ratio) return -1;
+    return 0;
 }
 
-// Function to sort items based on ratio in descending order
-void sortItems(struct Item items[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (items[j].ratio < items[j + 1].ratio) {
-                swap(&items[j], &items[j + 1]);
-            }
-        }
-    }
-}
-
-// Main function to solve Fractional Knapsack
+// The core Greedy logic
 void fractionalKnapsack(struct Item items[], int n, int capacity) {
     float totalValue = 0.0;
     int currentWeight = 0;
 
-    // Calculate ratio for all items
+    // First step: figure out the "bang for your buck" (ratio) for every item
     for (int i = 0; i < n; i++) {
         items[i].ratio = (float)items[i].value / items[i].weight;
     }
 
-    // Sort items by ratio
-    sortItems(items, n);
+    // Sort the items based on our calculated ratio using standard library qsort
+    qsort(items, n, sizeof(struct Item), compareItems);
 
-    printf("\nItems selected:\n");
+    printf("\n--- Loading the Knapsack ---\n");
 
     for (int i = 0; i < n; i++) {
-        // If the item can fit completely
+        // If the whole item fits, take it!
         if (currentWeight + items[i].weight <= capacity) {
             currentWeight += items[i].weight;
             totalValue += items[i].value;
-            printf("Added Item (Value: %d, Weight: %d) - Full\n", items[i].value, items[i].weight);
+            printf("Grabbed Full Item (Value: %d, Weight: %d) -> Capacity left: %d\n", 
+                   items[i].value, items[i].weight, capacity - currentWeight);
         }
-        // If item can't fit completely, take fraction
+        // If it doesn't fit completely, we take whatever fraction fits and we are done.
         else {
             int remain = capacity - currentWeight;
-            totalValue += items[i].value * ((float)remain / items[i].weight);
-            printf("Added Item (Value: %d, Weight: %d) - Fraction: %.2f%%\n", 
-                   items[i].value, items[i].weight, ((float)remain / items[i].weight) * 100);
-            break; // Knapsack is full
+            float fraction = (float)remain / items[i].weight;
+            totalValue += items[i].value * fraction;
+            printf("Grabbed Fraction %.2f%% of Item (Value: %d, Weight: %d) -> Knapsack is FULL!\n", 
+                   fraction * 100, items[i].value, items[i].weight);
+            break; 
         }
     }
 
-    printf("\nTotal Value in Knapsack: %.2f\n", totalValue);
+    printf("\nTotal Value safely secured in Knapsack: %.2f\n", totalValue);
 }
 
 int main() {
     int n, capacity;
 
-    printf("Enter number of items: ");
-    scanf("%d", &n);
+    printf("How many items are available to steal... I mean, collect? ");
+    if (scanf("%d", &n) != 1 || n <= 0) {
+        printf("Invalid input. We need a positive number of items.\n");
+        return 1;
+    }
 
-    struct Item items[n];
+    // Swapping out the VLA for safe dynamic memory allocation
+    struct Item *items = (struct Item *)malloc(n * sizeof(struct Item));
+    if (items == NULL) {
+        printf("Memory allocation failed. System might be low on RAM.\n");
+        return 1;
+    }
 
     for (int i = 0; i < n; i++) {
-        printf("Enter Value and Weight for item %d: ", i + 1);
+        printf("Enter Value and Weight for item %d (e.g., 60 10): ", i + 1);
         scanf("%d %d", &items[i].value, &items[i].weight);
     }
 
-    printf("Enter Knapsack Capacity: ");
+    printf("What is the maximum weight the Knapsack can hold? ");
     scanf("%d", &capacity);
 
+    // Run the greedy algorithm
     fractionalKnapsack(items, n, capacity);
 
+    // Always clean up dynamic memory
+    free(items);
     return 0;
 }
