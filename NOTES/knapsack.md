@@ -1,25 +1,17 @@
-Fractional Knapsack Problem
+# Fractional Knapsack Problem
 
-This problem is a classic example of a Greedy Algorithm.
+The Fractional Knapsack problem is a classic algorithmic puzzle solved perfectly by a **Greedy Strategy**. 
 
-Imagine you are a thief with a knapsack that can carry a maximum weight of W. You are in a room with several items, each having a specific weight and value. You want to maximize the total value in your knapsack.
+Imagine you are a thief in a vault with a knapsack that can only hold a certain amount of weight. There are various items, each with a specific weight and value. Unlike the "0/1 Knapsack" where you must take an item whole or leave it, the Fractional Knapsack allows you to break items apart (like gold dust or liquids) and take a fraction of them.
 
-The Rule: In "Fractional" Knapsack, you can break items. If you can't fit a whole item, you can take a fraction of it (e.g., half a bag of gold dust).
 
-The Strategy (Greedy Approach):
 
-Calculate the Value-to-Weight Ratio for every item. (Value / Weight).
+The greedy choice here is to calculate the value-to-weight ratio for every item, sort them from highest ratio to lowest, and stuff your knapsack with the highest ratio items first until you run out of space.
 
-Sort the items based on this ratio in descending order (highest ratio first).
+### Complexity Analysis
+* **Time Complexity:** O(n log n) - The bottleneck of this algorithm is sorting the items. Calculating the ratios and iterating through the sorted list both take O(n) time, but the standard `qsort` takes O(n log n).
+* **Space Complexity:** O(1) auxiliary space, though we use O(n) space to store the initial array of items in memory.
 
-Pick the item with the highest ratio:
-
-If the whole item fits, take it all and reduce the remaining capacity.
-
-If the whole item doesn't fit, take as much as possible (fill the remaining space) and stop.
-
-Complexity:
-
-Time Complexity: O(N log N) - Determining the ratios is O(N), but sorting them takes O(N log N).
-
-Space Complexity: O(1) - If we ignore the space for storing the inputs.
+### Real-World Use Cases
+1. **Resource Allocation:** Distributing limited computing resources (like bandwidth or CPU time) among various tasks to maximize overall system throughput.
+2. **Finance:** Portfolio optimization where you want to maximize return on investment (ROI) given a fixed budget, assuming fractional shares are allowed.
