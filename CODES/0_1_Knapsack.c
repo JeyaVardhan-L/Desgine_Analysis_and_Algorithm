@@ -20,7 +20,7 @@ int knapSack(int W, int wt[], int val[], int n) {
             else if (wt[i - 1] <= w) {
                 // Max of including the item or not including it
                 dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
-            } 
+            }
             else {
                 // Cannot include the item
                 dp[i][w] = dp[i - 1][w];
@@ -31,7 +31,7 @@ int knapSack(int W, int wt[], int val[], int n) {
     // The last cell contains the maximum value
     return dp[n][W];
 }
-
+//this block creates , the loop 
 int main() {
     // Example Input
     int val[] = {60, 100, 120}; // Values of the items
@@ -45,3 +45,4 @@ int main() {
 
     return 0;
 }
+
